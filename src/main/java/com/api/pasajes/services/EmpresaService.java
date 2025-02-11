@@ -13,9 +13,9 @@ public interface EmpresaService {
 
     ResponseEntity<Empresa> update(Integer id, Empresa empresa);
 
-    List<Empresa> getEmpresas();
+    List<Empresa> getAllList();
 
     ResponseEntity<Empresa> getById(Integer id);
 
-    ResponseEntity<Empresa> addPasaje(Integer id, Pasaje pasaje);
+    ResponseEntity<Empresa> addPasaje(String empresa, Pasaje pasaje);
 }

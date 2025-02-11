@@ -32,7 +32,7 @@ public class Pasaje {
     private float valor;
 
     @Temporal(value = TemporalType.DATE)
-    private Date salida;
+    private Date fecha;
 
     @OneToOne
     @JoinColumn(name = "id_destino")
@@ -48,12 +48,11 @@ public class Pasaje {
     public Pasaje() {
     }
 
-    public Pasaje(String pago, float valor, Destino destino, Cliente cliente) {
+    public Pasaje(String pago, float valor, Destino destino) {
         this.numero = String.valueOf(Math.random());
         this.formaPago = pago;
         this.valor = valor;
         this.destino = destino;
-        this.cliente = cliente;
     }
 
 }

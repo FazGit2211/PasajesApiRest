@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.api.pasajes.models.Empresa;
 import com.api.pasajes.services.serviceImplement.EmpresaServiceImpl;
 
+import org.springframework.web.bind.annotation.RequestParam;
+
+
 @RestController
 @RequestMapping(value = "/empresa", produces = MediaType.APPLICATION_JSON_VALUE)
 public class EmpresaController {
@@ -28,6 +31,11 @@ public class EmpresaController {
 
     @GetMapping(value = "/getAll")
     public List<Empresa> getAllList(){
-        return empresaServiceImpl.getEmpresas();
+        return empresaServiceImpl.getAllList();
+    }
+
+    @GetMapping(value = "/getById")
+    public ResponseEntity<Empresa> getById(@RequestParam String id) {
+        return empresaServiceImpl.getById(Integer.parseInt(id));
     }
 }

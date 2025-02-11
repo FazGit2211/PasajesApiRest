@@ -1,19 +1,16 @@
 package com.api.pasajes.services.serviceImplement;
 
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.api.pasajes.models.Ciudad;
 import com.api.pasajes.models.Cliente;
 import com.api.pasajes.models.Destino;
-import com.api.pasajes.models.Empresa;
 import com.api.pasajes.models.Pasaje;
-import com.api.pasajes.repositorys.CiudadRepository;
-import com.api.pasajes.repositorys.ClienteRepository;
-import com.api.pasajes.repositorys.DestinoRepository;
-import com.api.pasajes.repositorys.EmpresaRepository;
 import com.api.pasajes.repositorys.PasajeRepository;
 import com.api.pasajes.services.PasajeService;
 
@@ -24,35 +21,34 @@ public class PasajeServiceImpl implements PasajeService {
     private PasajeRepository pasajeRepository;
 
     @Autowired
-    private CiudadRepository ciudadRepository;
+    private ClienteServiceImpl clienteServiceImpl;
 
     @Autowired
-    private DestinoRepository destinoRepository;
+    private DestinoServiceImpl destinoServiceImpl;
 
     @Autowired
-    private EmpresaRepository empresaRepository;
+    private EmpresaServiceImpl empresaServiceImpl;
 
-    @Autowired
-    private ClienteRepository clienteRepository;
+ 
 
     @Override
-    public ResponseEntity<Pasaje> create(Cliente cliente, String formaPago, Float valor, String ciudad, String nombreEmpresa) {
+    @Transactional
+    public ResponseEntity<Pasaje> create(Cliente cliente, String formaPago, Float valor, String ciudad,
+            String nombreEmpresa) {
         try {
-            //Buscar y crear el destino
-            Ciudad buscarCiudad = ciudadRepository.findByNombre(ciudad);
-            Destino nuevoDestino = new Destino();
-            nuevoDestino.setCiudad(buscarCiudad);
-            destinoRepository.save(nuevoDestino);
-            //Crear el cliente nuevo
-            Cliente nuevoCliente = new Cliente(cliente.getNombre(), cliente.getApellido(), cliente.getDni(), cliente.getEmail());
-            clienteRepository.save(nuevoCliente);
-            //Crear el pasaje
-            Pasaje pasaje = new Pasaje(formaPago, valor, nuevoDestino, cliente);
+            // Buscar y crear el destino
+            ResponseEntity<Destino> destino = destinoServiceImpl.create(ciudad);
+            Destino nuevoDestino = destino.getBody();
+
+            // Crear el pasaje
+            Pasaje pasaje = new Pasaje(formaPago, valor, nuevoDestino);
             pasajeRepository.save(pasaje);
-            //Buscar empresa y agregarle el pasaje
-            Empresa empresa = empresaRepository.findByNombre(nombreEmpresa);
-            empresa.addPasajeCollection(pasaje);;
-            empresaRepository.save(empresa);
+
+            // Buscar empresa y agregarle el pasaje
+            empresaServiceImpl.addPasaje(nombreEmpresa, pasaje);
+            // Crear el cliente nuevo
+            clienteServiceImpl.create(cliente);
+            clienteServiceImpl.addPasaje(pasaje, cliente);
             return ResponseEntity.ok(pasaje);
         } catch (Exception e) {
             // TODO: handle exception
@@ -61,8 +57,18 @@ public class PasajeServiceImpl implements PasajeService {
         return ResponseEntity.badRequest().build();
     }
 
+
+
     @Override
-    public List<Pasaje> getPasajes() {
-        return pasajeRepository.findAll();
+    public List<Pasaje> getAllList() {
+        return pasajeRepository.findAll();        
+    }
+
+
+
+    @Override
+    public ResponseEntity<Pasaje> getById(Integer id) {
+        Optional<Pasaje> pasaje = pasajeRepository.findById(id);
+        return ResponseEntity.ok(pasaje.get());
     }
 }
