@@ -38,24 +38,25 @@ public class EmpresaServiceImpl implements EmpresaService {
     }
 
     @Override
-    public List<Empresa> getEmpresas() {
-        return empresaRepository.findAll();
-    }
-
-    @Override
     public ResponseEntity<Empresa> getById(Integer id) {
         return ResponseEntity.ok(empresaRepository.findById(id).get());
     }
 
     @Override
-    public ResponseEntity<Empresa> addPasaje(Integer id, Pasaje pasaje) {
-        try {
-            return null;
-        } catch (Exception e) {
-            // TODO: handle exception
-            System.out.println(e);
+    public ResponseEntity<Empresa> addPasaje(String empresa, Pasaje pasaje) {
+        Empresa buscarEmpresa = empresaRepository.findByNombre(empresa);
+        if (buscarEmpresa != null) {
+            if (!buscarEmpresa.getPasajes().contains(pasaje)) {
+                buscarEmpresa.getPasajes().add(pasaje);
+                return ResponseEntity.ok(empresaRepository.save(buscarEmpresa));
+            }
         }
         return ResponseEntity.badRequest().build();
+    }
+
+    @Override
+    public List<Empresa> getAllList() {
+        return empresaRepository.findAll();
     }
 
 }

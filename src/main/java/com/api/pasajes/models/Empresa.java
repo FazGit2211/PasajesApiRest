@@ -16,7 +16,7 @@ public class Empresa {
     private Integer id;
     @Basic
     private String nombre;
-    private String cuil_cuit;
+    private String cuilCuit;
 
     @OneToMany
     private Collection<Pasaje> pasajes;
@@ -24,15 +24,11 @@ public class Empresa {
     public Empresa() {
     }
 
-    public Empresa(String nombre, String numero) {
-        this.nombre = nombre;
-        this.cuil_cuit = numero;
-    }
+    
 
-    public void addPasajeCollection(Pasaje pasaje) {
-        if (!this.pasajes.contains(pasaje)) {
-            this.pasajes.add(pasaje);
-        }
+    public Empresa(String nombre, String cuilCuit) {
+        this.nombre = nombre;
+        this.cuilCuit = cuilCuit;
     }
 
     public Integer getId() {
@@ -43,12 +39,14 @@ public class Empresa {
         return nombre;
     }
 
-    public String getCuil_cuit() {
-        return cuil_cuit;
-    }
-
     public Collection<Pasaje> getPasajes() {
         return pasajes;
     }
 
+
+    public String getCuilCuit() {
+        return cuilCuit;
+    }
+
+    
 }

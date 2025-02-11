@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.api.pasajes.models.Cliente;
@@ -29,8 +30,13 @@ public class PasajeController {
         return pasajeServiceImpl.create(cliente, formaPago, valor, ciudad, empresa);
     }
 
-    @GetMapping(value = "/getAllList")
+    @GetMapping(value = "/getAll")
     public List<Pasaje> getAllList() {
-        return pasajeServiceImpl.getPasajes();
+        return pasajeServiceImpl.getAllList();
+    }
+
+    @GetMapping(value = "/getById")
+    public ResponseEntity<Pasaje> getById(@RequestParam String id){
+        return pasajeServiceImpl.getById(Integer.parseInt(id));
     }
 }
