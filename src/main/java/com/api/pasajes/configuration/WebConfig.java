@@ -1,4 +1,4 @@
-package com.api.pasajes;
+package com.api.pasajes.configuration;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;

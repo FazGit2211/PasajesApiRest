@@ -22,6 +22,7 @@ public class Ciudad {
     private String nombre;
     private String provincia;
     private float distancia;
+    private String nombreImagen;
 
     @OneToMany(mappedBy = "ciudad")
     @JsonManagedReference
@@ -30,43 +31,32 @@ public class Ciudad {
     public Ciudad() {
     }
 
-    public Ciudad(String nombre, String provincia, float distancia) {
+    public Ciudad(String nombre, String provincia, float distancia, String nom) {
         this.nombre = nombre;
         this.provincia = provincia;
         this.distancia = distancia;
         this.destinos = new ArrayList<>();
+        this.nombreImagen = nom;
     }
 
     public String getNombre() {
         return nombre;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
     public String getProvincia() {
         return provincia;
-    }
-
-    public void setProvincia(String provincia) {
-        this.provincia = provincia;
     }
 
     public float getDistancia() {
         return distancia;
     }
 
-    public void setDistancia(float distancia) {
-        this.distancia = distancia;
-    }
-
     public Collection<Destino> getDestinos() {
         return destinos;
     }
 
-    public void setDestinos(Collection<Destino> destinos) {
-        this.destinos = destinos;
+    public String getNombreImagen() {
+        return nombreImagen;
     }
 
     public boolean addDestinos(Destino destino) {
