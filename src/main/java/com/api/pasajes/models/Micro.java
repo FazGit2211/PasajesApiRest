@@ -8,23 +8,34 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import lombok.Data;
 
 @Entity
 @Data
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-public class Destino {
+public class Micro {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne
-    private Ciudad ciudad;
+    private String tipo;
+    private Integer asientos = 0;
+    private final Integer MAX_ASIENTOS = 15;
+    
+    @OneToOne
+    private Ciudad estacion;
 
-    public Ciudad getCiudad() {
-        return ciudad;
+    @ManyToOne
+    private Empresa empresaMicro;
+
+    public Micro(){};
+
+    public Micro(String tipo, Ciudad ciudad){
+        this.tipo = tipo;
+        this.estacion = ciudad;
     }
     
-    
+
 }

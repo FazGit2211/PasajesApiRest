@@ -51,7 +51,6 @@ public class PasajeServiceImpl implements PasajeService {
             clienteServiceImpl.addPasaje(pasaje, cliente);
             return ResponseEntity.ok(pasaje);
         } catch (Exception e) {
-            // TODO: handle exception
             System.out.println(e);
         }
         return ResponseEntity.badRequest().build();

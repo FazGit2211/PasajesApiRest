@@ -31,7 +31,6 @@ public class EmpresaServiceImpl implements EmpresaService {
                 return ResponseEntity.badRequest().build();
             }
         } catch (Exception e) {
-            // TODO: handle exception
             System.out.println(e);
         }
         return ResponseEntity.ok(empresaRepository.save(empresa));

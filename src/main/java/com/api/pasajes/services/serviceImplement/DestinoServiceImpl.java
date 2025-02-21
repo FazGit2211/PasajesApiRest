@@ -29,7 +29,6 @@ public class DestinoServiceImpl implements DestinoService {
             destino.setCiudad(ciudad);
             return ResponseEntity.ok(destinoRepository.save(destino));
         } catch (Exception e) {
-            // TODO: handle exception
             System.out.println(e);
         }
         return ResponseEntity.badRequest().build();

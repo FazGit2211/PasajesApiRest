@@ -21,6 +21,8 @@ public class Persona {
     private int dni;
     private String email;
 
+    public Persona(){};
+
     public Persona(String nombre, String apellido, Integer dni, String email) {
         this.nombre = nombre;
         this.apellido = apellido;

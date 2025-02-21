@@ -2,7 +2,8 @@ package com.api.pasajes.models;
 
 import java.util.Date;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import jakarta.persistence.Basic;
 import jakarta.persistence.Entity;
@@ -18,6 +19,7 @@ import lombok.Data;
 
 @Entity
 @Data
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Pasaje {
 
     @Id
@@ -39,11 +41,10 @@ public class Pasaje {
     private Destino destino;
 
     @ManyToOne
-    @JsonBackReference
     private Cliente cliente;
 
     @ManyToOne
-    private Empresa empresa;
+    private Empresa empresaPasaje;
 
     public Pasaje() {
     }

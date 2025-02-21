@@ -3,7 +3,8 @@ package com.api.pasajes.models;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import jakarta.persistence.Basic;
 import jakarta.persistence.Entity;
@@ -11,8 +12,11 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import lombok.Data;
 
 @Entity
+@Data
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Ciudad {
 
     @Id
@@ -25,7 +29,6 @@ public class Ciudad {
     private String nombreImagen;
 
     @OneToMany(mappedBy = "ciudad")
-    @JsonManagedReference
     private Collection<Destino> destinos;
 
     public Ciudad() {
@@ -39,25 +42,6 @@ public class Ciudad {
         this.nombreImagen = nom;
     }
 
-    public String getNombre() {
-        return nombre;
-    }
-
-    public String getProvincia() {
-        return provincia;
-    }
-
-    public float getDistancia() {
-        return distancia;
-    }
-
-    public Collection<Destino> getDestinos() {
-        return destinos;
-    }
-
-    public String getNombreImagen() {
-        return nombreImagen;
-    }
 
     public boolean addDestinos(Destino destino) {
         if (!this.destinos.contains(destino)) {
