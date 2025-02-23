@@ -9,4 +9,5 @@ public interface MicroService {
 
     ResponseEntity<Micro> create(Micro micro);
     List<Micro> getAll();
+    ResponseEntity<Micro> addEmpresa(String nombre, String empresa);
 }

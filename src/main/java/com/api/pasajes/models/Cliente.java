@@ -20,7 +20,7 @@ public class Cliente extends Persona {
 
     private String codigo;
 
-    @OneToMany(mappedBy = "cliente")
+    @OneToMany
     private Collection<Pasaje> pasajes;
 
     public Cliente(String nombre, String apellido, Integer dni, String email) {

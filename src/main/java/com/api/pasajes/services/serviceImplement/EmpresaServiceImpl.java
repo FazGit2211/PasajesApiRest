@@ -8,8 +8,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.api.pasajes.models.Empresa;
+import com.api.pasajes.models.Micro;
 import com.api.pasajes.models.Pasaje;
 import com.api.pasajes.repositorys.EmpresaRepository;
+import com.api.pasajes.repositorys.MicroRepository;
 import com.api.pasajes.services.EmpresaService;
 
 @Service
@@ -17,6 +19,9 @@ public class EmpresaServiceImpl implements EmpresaService {
 
     @Autowired
     private EmpresaRepository empresaRepository;
+
+    @Autowired
+    private MicroRepository microRepository;
 
     @Override
     public ResponseEntity<Empresa> create(Empresa empresa) {
@@ -44,7 +49,7 @@ public class EmpresaServiceImpl implements EmpresaService {
     @Override
     public ResponseEntity<Empresa> addPasaje(String empresa, Pasaje pasaje) {
         Empresa buscarEmpresa = empresaRepository.findByNombre(empresa);
-        if (buscarEmpresa != null) {
+        if (buscarEmpresa != null || pasaje != null) {
             if (!buscarEmpresa.getPasajes().contains(pasaje)) {
                 buscarEmpresa.getPasajes().add(pasaje);
                 return ResponseEntity.ok(empresaRepository.save(buscarEmpresa));
@@ -56,6 +61,19 @@ public class EmpresaServiceImpl implements EmpresaService {
     @Override
     public List<Empresa> getAllList() {
         return empresaRepository.findAll();
+    }
+
+    @Override
+    public ResponseEntity<Empresa> addMicro(String empresaNombre, String microNombre) {
+        Empresa empresa = empresaRepository.findByNombre(empresaNombre);
+        Micro micro = microRepository.findByNombre(microNombre);
+        if (empresa != null || micro != null) {
+            if (!empresa.getMicros().contains(micro)) {
+                empresa.getMicros().add(micro);
+                return ResponseEntity.ok(empresaRepository.save(empresa));
+            }
+        }
+        return ResponseEntity.badRequest().build();
     }
 
 }

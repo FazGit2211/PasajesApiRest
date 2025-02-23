@@ -28,7 +28,7 @@ public class Ciudad {
     private float distancia;
     private String nombreImagen;
 
-    @OneToMany(mappedBy = "ciudad")
+    @OneToMany
     private Collection<Destino> destinos;
 
     public Ciudad() {

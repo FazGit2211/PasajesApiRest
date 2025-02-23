@@ -20,6 +20,7 @@ public class Micro {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    private String nombre;
     private String tipo;
     private Integer asientos = 0;
     private final Integer MAX_ASIENTOS = 15;
@@ -27,13 +28,14 @@ public class Micro {
     @OneToOne
     private Ciudad estacion;
 
-    @ManyToOne
+    @ManyToOne(targetEntity = Empresa.class)
     private Empresa empresaMicro;
 
     public Micro(){};
 
-    public Micro(String tipo, Ciudad ciudad){
+    public Micro(String tipo,String nombre, Ciudad ciudad){
         this.tipo = tipo;
+        this.nombre = nombre;
         this.estacion = ciudad;
     }
     

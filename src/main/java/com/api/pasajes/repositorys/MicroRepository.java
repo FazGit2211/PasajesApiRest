@@ -6,4 +6,5 @@ import com.api.pasajes.models.Micro;
 
 public interface MicroRepository extends JpaRepository< Micro, Integer>{
 
+    Micro findByNombre(String nombre);
 }

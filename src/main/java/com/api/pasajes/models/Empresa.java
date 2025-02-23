@@ -27,7 +27,7 @@ public class Empresa {
     @OneToMany(mappedBy = "empresaPasaje")
     private Collection<Pasaje> pasajes;
 
-    @OneToMany(mappedBy = "empresaMicro")
+    @OneToMany
     private Collection<Micro> micros;
 
     public Empresa() {

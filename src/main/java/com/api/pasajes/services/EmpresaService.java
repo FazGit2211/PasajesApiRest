@@ -17,5 +17,7 @@ public interface EmpresaService {
 
     ResponseEntity<Empresa> getById(Integer id);
 
-    ResponseEntity<Empresa> addPasaje(String empresa, Pasaje pasaje);
+    ResponseEntity<Empresa> addPasaje(String empresaNombre, Pasaje pasaje);
+
+    ResponseEntity<Empresa> addMicro(String empresaNombre, String microNombre);
 }
